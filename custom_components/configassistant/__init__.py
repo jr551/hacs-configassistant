@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import os
 import shutil
+import logging
 import voluptuous as vol
 
 from homeassistant.config_entries import ConfigEntry
@@ -11,6 +12,8 @@ from homeassistant.core import HomeAssistant
 import homeassistant.helpers.config_validation as cv
 
 from .panel import async_setup_panel
+
+_LOGGER = logging.getLogger(__name__)
 
 DOMAIN = "configassistant"
 PLATFORMS: list[Platform] = [Platform.SENSOR]
@@ -24,6 +27,8 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     """Set up the Config Assistant integration."""
+    _LOGGER.info("Setting up Config Assistant integration")
+
     # Create www directory if it doesn't exist
     www_path = os.path.join(hass.config.path("www"), "config-assistant")
     os.makedirs(www_path, exist_ok=True)
@@ -41,13 +46,17 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
 
     # Set up panel
     await async_setup_panel(hass)
+    _LOGGER.info("Config Assistant panel setup complete")
+
     return True
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Config Assistant from a config entry."""
+    _LOGGER.info("Setting up Config Assistant entry")
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
+    _LOGGER.info("Unloading Config Assistant entry")
     return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
