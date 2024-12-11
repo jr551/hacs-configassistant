@@ -6,7 +6,7 @@
   "dependencies": ["http", "frontend"],
   "documentation": "https://github.com/jr551/hacs-configassistant",
   "issue_tracker": "https://github.com/jr551/hacs-configassistant/issues",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "iot_class": "local_polling",
   "requirements": []
 }
