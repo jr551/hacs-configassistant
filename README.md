@@ -1,3 +1,7 @@
+# This is only a test project
+# please do not use it yet
+
+
 # Home Assistant Custom Component
 
 This is a custom component for Home Assistant.
