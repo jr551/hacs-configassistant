@@ -8,6 +8,5 @@
   "issue_tracker": "https://github.com/jr551/hacs-configassistant/issues",
   "version": "1.0.0",
   "iot_class": "local_polling",
-  "requirements": [],
-  "minimum_ha_version": "2023.12.0"
+  "requirements": []
 }
