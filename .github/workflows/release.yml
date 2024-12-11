@@ -11,6 +11,8 @@ on:
 
 permissions:
   contents: write
+  issues: write
+  pull-requests: write
 
 jobs:
   release:
@@ -32,12 +34,10 @@ jobs:
           zip -r ../configassistant.zip configassistant
 
       - name: Create Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: v${{ steps.version.outputs.version }}
+          tag: v${{ steps.version.outputs.version }}
           name: Release v${{ steps.version.outputs.version }}
-          files: configassistant.zip
-          draft: false
-          prerelease: false
-          generate_release_notes: true
+          artifacts: configassistant.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
+          generateReleaseNotes: true
