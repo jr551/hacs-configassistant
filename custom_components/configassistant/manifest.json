@@ -3,7 +3,7 @@
   "name": "Config Assistant",
   "codeowners": ["@jr551"],
   "config_flow": true,
-  "dependencies": [],
+  "dependencies": ["http", "frontend"],
   "documentation": "https://github.com/jr551/hacs-configassistant",
   "issue_tracker": "https://github.com/jr551/hacs-configassistant/issues",
   "version": "1.0.1",
