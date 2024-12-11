@@ -1,6 +1,8 @@
 """The Config Assistant integration."""
 from __future__ import annotations
 
+import os
+import shutil
 import voluptuous as vol
 
 from homeassistant.config_entries import ConfigEntry
@@ -22,6 +24,22 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     """Set up the Config Assistant integration."""
+    # Create www directory if it doesn't exist
+    www_path = os.path.join(hass.config.path("www"), "config-assistant")
+    os.makedirs(www_path, exist_ok=True)
+
+    # Copy our www content
+    component_path = os.path.dirname(__file__)
+    www_source = os.path.join(component_path, "www")
+    
+    if os.path.exists(www_source):
+        for item in os.listdir(www_source):
+            source = os.path.join(www_source, item)
+            dest = os.path.join(www_path, item)
+            if os.path.isfile(source):
+                shutil.copy2(source, dest)
+
+    # Set up panel
     await async_setup_panel(hass)
     return True
 

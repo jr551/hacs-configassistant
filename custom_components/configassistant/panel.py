@@ -1,6 +1,6 @@
 """Panel for Config Assistant."""
 import voluptuous as vol
-from homeassistant.components import websocket_api
+from homeassistant.components import websocket_api, panel_custom
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.typing import ConfigType
 import homeassistant.helpers.config_validation as cv
@@ -8,21 +8,31 @@ from homeassistant.components.http import HomeAssistantView
 
 async def async_setup_panel(hass: HomeAssistant):
     """Set up the Config Assistant panel."""
-    hass.http.register_view(ConfigAssistantPanelView)
-    
-    # Register the panel
     hass.components.frontend.async_register_built_in_panel(
-        component_name="custom",
+        "custom",
         sidebar_title="Config Assistant",
         sidebar_icon="mdi:cog-outline",
         frontend_url_path="config-assistant",
-        require_admin=True,
-        config={"_panel_custom": {
-            "name": "config-assistant-panel",
-            "embed_iframe": True,
-            "trust_external": False,
-            "module_url": "/config-assistant-panel/main.js",
-        }},
+        require_admin=False,
+        config={
+            "_panel_custom": {
+                "name": "config-assistant",
+                "embed_iframe": True,
+                "trust_external": False,
+            }
+        },
+    )
+
+    hass.components.frontend.async_register_built_in_panel(
+        component_name="iframe",
+        sidebar_title="Config Assistant",
+        sidebar_icon="mdi:cog-outline",
+        frontend_url_path="config-assistant",
+        require_admin=False,
+        config={
+            "url": "/local/config-assistant/index.html",
+            "title": "Config Assistant"
+        },
     )
 
     return True
